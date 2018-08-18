@@ -1,0 +1,40 @@
+<h1>Test Impure Pipes</h1>
+<p>Here we applied impure pipes. When you page load, testimpure pipe will called 4 times because heros array contain 4 elements.
+  Now As per concept,
+  <b>Angular executes an impure pipe during every component change detection cycle. An impure pipe is called often,
+      as often as every keystroke or mouse-move or every DOM event or even if variable changes.</b> so Here we create "CLICK" button for execute DOM
+  event, so If you click on "CLICK" button, testimpure pipe will be called. we want to execute our testimpure pipe code whenever
+  any change occur in heroes array, otherwise we don't want to run our pipe code. But Here on every DOM event, our code execute.
+  That we don't want. so It cause Application Performance....So Don't Use Impure Pipe If possible
+</p>
+<div>
+  <div *ngFor="let h of heros;">
+    <p>{{h.name}} ===> {{h.canFly}}</p>
+  </div>
+  <hr>
+  <div *ngFor="let h of heros | testimpure;">
+    <p>{{h.name}} ===> {{h.canFly}}</p>
+  </div>
+  <div>
+    <input type="text" #addHero>
+    <button type="button" value="Add HERO" (click)="funcAddHero(addHero.value); addHero.value='';">Add HERO</button>
+    <button type="button" value="CLICK" (click)="funcClick()">CLICK</button>
+  </div>
+  <hr>
+  <h1>Built In Json Pipe</h1>
+  <div>
+    <p>Without JSON pipe:</p>
+    <pre>{{object}}</pre>
+    <p>With JSON pipe:</p>
+    <pre>{{object | json}}</pre>
+  </div>
+  <hr>
+  <p><em>If variable is changed, then it will call the pipe even if pipe is pure
+    But array, object, function is changed, then it will not call the pipe if it is pure.
+  It will only call if the pipe is impure. For demonstarte this, Uncomment "start_tag p start_double_curly_braces str | testimpure end_double_curly_braces end_tag /p" code & In testimpure.pipe.ts
+    file commnet "pure:false" & In transform method, commnent all the code except
+    console.log("PIPE CALLED...")and just write "return;". We set timeout function in
+  str..so after 3 second str will change and it will call the pipe even if pipe is pure.</em></p>
+  <!-- <p>{{str | testimpure}}</p> -->
+  <p>{{str}}</p>
+</div>

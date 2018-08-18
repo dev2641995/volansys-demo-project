@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-lg-12">
+    &nbsp;
+  </div>
+</div>
+
+<div class="row">
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div ngModelGroup="userDetails" #userDetails="ngModelGroup">
+      <div class="col-lg-12">
+        <label class="col-lg-2" for="fname">First Name : </label>
+        <input class="col-lg-3" type="text" name="fname" id="fname" ngModel required #fname="ngModel" />
+        <span class="col-lg-4 error" *ngIf="!fname.valid && fname.touched">First Name is required...</span>
+      </div>
+      <br>
+      <br>
+      <div class="col-lg-12">
+        <label class="col-lg-2" for="lname">Last Name : </label>
+        <input class="col-lg-3" type="text" name="lname" id="lname" ngModel required #lname="ngModel" />
+        <span class="col-lg-4 error" *ngIf="!lname.valid && lname.touched">Last Name is required...</span>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="col-lg-12">
+      <label class="col-lg-2" for="mno">Mobile Number : </label>
+      <input class="col-lg-3" type="text" name="mno" id="mno" [(ngModel)]="defaultUserDetails.mno" required #mno="ngModel" pattern="[0-9]{10}"
+        title="Ten digits mobile number" />
+      <span class="col-lg-4 error" *ngIf="!mno.valid && mno.touched">Mobile Number is required...</span>
+    </div>
+    <br>
+    <br>
+    <div class="col-lg-12">
+      <label class="col-lg-2" for="gender">Gender : </label>
+      <label *ngFor="let gender of genders">
+        <input type="radio" name="gender" [(ngModel)]="defaultUserDetails.gender" [value]="gender" required>{{ gender | uppercase }}
+      </label>
+    </div>
+    <br>
+    <br>
+    <div ngModelGroup="hobby" class="col-lg-12">
+      <label class="col-lg-2" for="hobby">Hobby : </label>
+      <span *ngFor="let hobby of hobbies; let i = index;">
+        <input type="checkbox" name="{{hobby.name}}" [ngModel]="hobby.checked" />{{hobby.name}}
+      </span>
+    </div>
+    <br>
+    <br>
+    <div class="col-lg-12">
+      <label class="col-lg-2" for="price">Price : </label>
+      <select name="price" [ngModel]="defaultUserDetails.price" class="col-lg-3">
+          <option value="">--- Select Price ---</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+    </div>
+    <br>
+    <br>
+    <div class="col-lg-12">
+      <span class="col-lg-2">&nbsp;</span>
+      <input class="col-lg-1" type="submit" value="SUBMIT" [disabled]="!f.valid">
+      <span class="col-lg-1">&nbsp;</span>
+      <input class="col-lg-1" type="button" value="RESET" (click)="signUpForm.reset();setFormDefaultValue();">
+      <!-- HERE IF YOU WRITE type="reset", THEN IT IS NOT WORKING WITH SET DEFAULT VALUE -->
+    </div>
+  </form>
+</div>
